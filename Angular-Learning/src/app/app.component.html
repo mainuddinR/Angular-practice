@@ -1,0 +1,165 @@
+<!-- <h1 style="background-color: red;">Dynamic Color</h1> -->
+
+<h1 [style.backgroundColor]="bgcolor">Dybamic Color</h1>
+<p [style.fontSize]="fontSize">Hello World</p>
+<p [style.fontSize.px]="fontSize1">Mainuddin</p>
+<!-- pt means % ,px means pixel -->
+<h1 [style.fontSize]="zoom? headingBig : headingSmall">Heading</h1>
+<!-- if also use -->
+<h1 [style.fontSize]="zoom? '50px':'20px' ">heading Not propertices</h1>
+<button (click)="updateHeadingSize()">toggle</button>
+
+<br><br>
+<hr>
+<p>Directive</p>
+
+<h1 *ngIf="show">Heading Tag</h1>
+
+<h1>ngFor Directive </h1>
+<ol>
+  <li *ngFor="let emp of employee">
+    {{emp}}
+  </li>
+</ol>
+
+<ol>
+  <li *ngFor="let user of userData">
+    <ul>
+      <li>
+        {{user.name}}
+      </li>
+      <li>
+        {{user.age}},
+      </li>
+
+      <li>
+        {{user.email}}
+      </li>
+    </ul>
+
+  </li>
+</ol>
+<div *ngIf="login; else elseBlock">
+  <a href="" (click)="handleLogin()">Logout</a>
+</div>
+<ng-template #elseBlock>
+  <a href="/">Login</a>
+</ng-template>
+
+<h1 *ngIf="block==1">Heading 1</h1>
+<h1 *ngIf="block==2">Heading 2</h1>
+<h1 *ngIf="block==3">Heading 3</h1>
+<h1 *ngIf="block==4">Heading 4</h1>
+<button (click)="updatedBlock()">Updated Block</button>
+
+<p>ngSwitch</p>
+
+<h4>Change Color</h4>
+<button (click)="changeColor('red')">Red</button>
+<button (click)="changeColor('green')">Green</button>
+<button (click)="changeColor('yellow')">Yellow</button>
+<button (click)="changeColor('blue')">Blue</button>
+<button (click)="changeColor('orange')">Orange</button>
+<button (click)="changeColor('pink')">Pink</button>
+<button (click)="changeColor('jjj')">Default</button>
+
+<div [ngSwitch]="color">
+  <h1 *ngSwitchCase="'red'" style="background-color: red;">Red</h1>
+  <h1 *ngSwitchCase="'green'" style="background-color: green;">Green</h1>
+  <h1 *ngSwitchCase="'yellow'" style="background-color: yellow;">Yellow</h1>
+  <h1 *ngSwitchCase="'blue'" style="background-color: blue;">Blue</h1>
+  <h1 *ngSwitchCase="'orange'" style="background-color:orange;">Orange</h1>
+  <h1 *ngSwitchCase="'pink'" style="background-color: pink;">Pink</h1>
+  <h1 *ngSwitchDefault style="background-color:black; color:white;">Black</h1>
+
+</div>
+<br><br>
+<hr>
+<h1>Router Learning</h1>
+
+
+<ul>
+  <li>
+    <a routerLink="/login">Login</a>
+  </li>
+  <li>
+    <a routerLink="/about">about</a>
+  </li>
+  <li>
+    <a routerLink="/contact">Contact</a>
+  </li>
+</ul>
+
+<!-- <router-outlet></router-outlet> -->
+<br>
+<hr>
+<app-header></app-header>
+<h1>Basic Routing in Angular</h1>
+<router-outlet />
+
+<hr>
+
+<form action="" method="post">
+  <input type="text" name="username" placeholder="Username" [formControl]="name">
+  <br><br>
+  <input type="text" name="password" placeholder="Password" [formControl]="password">
+  <br><br>
+  <button type="button" (click)="displayValue()">Login</button>
+  <br>
+  <button type="button" (click)="setValue()">Set</button>
+
+
+  <h1>{{name.value}}</h1>
+  <h2>{{password.value}}</h2>
+</form>
+
+<h1>Forms Grouping</h1>
+
+<form [formGroup]="profileRegistration" (ngSubmit)="onSubmit()">
+  <input type="text" name="firstName" placeholder="First Name" formControlName="firstName">
+  <span *ngIf="firstName?.hasError('required')">Name is Required</span> &nbsp;
+  <span *ngIf="firstName?.invalid && (firstName?.dirty|| firstName?.touched)">Provide your Name</span>
+  <br><br>
+  <input type="text" name="lastName" placeholder="Last Name" formControlName="lastName">
+  <br><br>
+  <input type="email" name="email" placeholder="Enter your email" formControlName="email">
+  <span *ngIf="email?.hasError('required')">email is Required</span> &nbsp;
+  <span *ngIf="email?.invalid && (email?.dirty|| email?.touched)">Provide your email</span>
+
+  <br><br>
+  <input type="password" name="password" placeholder="password" formControlName="password">
+  <span *ngIf="Password?.hasError('required')">Password is Required</span> &nbsp;
+  <span *ngIf="Password?.invalid && (Password?.dirty|| Password?.touched)">Provide your Password</span>
+  <br><br>
+
+  <button>Register</button>
+</form>
+
+<h1>{{profileRegistration.value.firstName}}</h1>
+<h1>{{profileRegistration.value.lastName}}</h1>
+<h1>{{profileRegistration.value.email}}</h1>
+
+
+<form #userForm="ngForm" (ngSubmit)="addDetails(userForm.value)">
+  <input #name type="text" required name="name" placeholder="name" ngModel>
+  <span *ngIf="name.invalid">name is required</span>
+  <br><br>
+  <input type="password" name="password" placeholder="password" ngModel>
+  <br><br>
+  <select name="gender" id="" ngModel>
+    <option value="Male">Male</option>
+    <option value="Female">Female</option>
+    <option value="other">other</option>
+  </select>
+  <br>
+  <br>
+  <input type="range" name="range" min="0" max="100" ngModel>
+  <br><br>
+  <button>Add User</button>
+</form>
+
+<h3>{{userDetails.name}}</h3>
+<h3>{{userDetails.password}}</h3>
+<h3>{{userDetails.gender}}</h3>
+<h3>{{userDetails.range}}</h3>
+

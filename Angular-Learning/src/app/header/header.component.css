@@ -1,0 +1,26 @@
+nav{
+    display:flex;
+    justify-content: space-between;
+    margin-left:10px;
+    margin-right:10px;
+}
+ul{
+    display: flex;
+    list-style-type: none;
+    width:200px;
+    margin-right: 75px;
+    justify-content: space-between;
+
+}
+ul li{
+    margin:10px;
+}
+ul li a{
+    text-decoration: none;
+}
+.active{
+    background-color: rgb(29, 101, 26);
+    border-radius: 10px;
+    padding: 5px;
+    color:aliceblue;
+}
