@@ -141,8 +141,8 @@
 
 
 <form #userForm="ngForm" (ngSubmit)="addDetails(userForm.value)">
-  <input #name type="text" required name="name" placeholder="name" ngModel>
-  <span *ngIf="name.invalid">name is required</span>
+  <input type="text" required name="name" placeholder="name" ngModel>
+  <!-- <span>name is required</span> -->
   <br><br>
   <input type="password" name="password" placeholder="password" ngModel>
   <br><br>
@@ -158,8 +158,46 @@
   <button>Add User</button>
 </form>
 
-<h3>{{userDetails.name}}</h3>
+<!-- <h3>{{userDetails.name}}</h3>
 <h3>{{userDetails.password}}</h3>
 <h3>{{userDetails.gender}}</h3>
-<h3>{{userDetails.range}}</h3>
+<h3>{{userDetails.range}}</h3> -->
 
+
+@for(user of userInfo; track user.id) {
+<div>
+  <h3>{{user.firstName}}</h3>
+  <p>{{user.lastName}}</p>
+</div>
+
+}
+<br><br>
+<hr>
+<h1>Api post</h1>
+
+<form #userForm1="ngForm" (ngSubmit)="addUser(userForm1.value)">
+  <input type="text" placeholder="enter First Name" name="firstName" [ngModel]="Oneuser?.firstName">
+  <br><br>
+  <input type="text" placeholder="enter Last Name" name="lastName" [ngModel]="Oneuser?.lastName">
+  <br><br>
+  <input type="text" placeholder="enter email" name="email" [ngModel]="Oneuser?.email">
+  <br><br>
+  @if(!Oneuser){
+    <button>Add user</button>
+  }@else{
+    <button>Updated user</button>
+  }
+ 
+  
+</form>
+
+@for(user of userInfo; track user.id) {
+<div>
+  <h3>{{user.firstName}}</h3>
+  <p>{{user.lastName}}</p>
+  <p>{{user.email}}</p>
+  <button (click)="deleteUser(user.id)">Deleted</button>
+  <button (click)="selectedUser(user.id)">Updated user</button>
+</div>
+
+}

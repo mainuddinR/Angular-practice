@@ -1,15 +1,17 @@
 import { NgFor, NgIf, NgSwitch, NgSwitchCase, NgSwitchDefault } from '@angular/common';
 import { Component, NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common'; 
-import { RouterLink, RouterOutlet } from '@angular/router';
+import { Router, RouterLink, RouterOutlet } from '@angular/router';
 import { HeaderComponent } from './header/header.component';
 import { FormControl, FormGroup, FormsModule, NgForm, NgModel, ReactiveFormsModule, Validators } from '@angular/forms';
+import { EmployeeService } from './services/employee.service';
+import { user } from './Interface/user';
 
 @Component({
   selector: 'app-root',
   standalone:true,
   imports: [NgIf,NgFor,NgSwitch, NgSwitchCase,NgSwitchDefault,RouterOutlet ,RouterLink,
-    HeaderComponent , ReactiveFormsModule ,FormsModule 
+    HeaderComponent , ReactiveFormsModule ,FormsModule ,CommonModule
   ], //ng sob gular bodle CommonModule use korlei hoy
   templateUrl: './app.component.html',
   styleUrl: './app.component.css'
@@ -71,8 +73,8 @@ export class AppComponent {
    }
 
    //reactive form example
-   name=new FormControl();
-   password=new FormControl();
+   name=new FormControl('');
+   password=new FormControl('');
    //default va1lue set kora jay
   //  name=new FormControl('Atikul');
   //  password=new FormControl('12345');
@@ -118,6 +120,61 @@ export class AppComponent {
     console.log(data);
     this.userDetails=data;
    }
+   
+   constructor(private employeeService:EmployeeService,private router:Router){}
+
+   userInfo:user[]=[];
+   ngOnInit(){
+    this.getUsers();
+  }
+  
+  getUsers(){
+    this.employeeService.getEmployees().subscribe((data:user[])=>{
+        console.log(data);
+        this.userInfo=data;
+        })
+  }
+
+  addUser(userInfo:user){
+    if(!this.Oneuser){
+      console.log(userInfo);
+         this.employeeService.saveUesr(userInfo).subscribe(
+        (data)=>{
+        console.log("User added successfully",data);
+        this.getUsers(); // Refresh the user list after adding a new user
+      })
+      }
+      else if(this.Oneuser && this.Oneuser.id){
+        this.employeeService.updateById(this.Oneuser.id,userInfo).subscribe(
+          (data)=>{
+            console.log("User Updated successfully",data);
+            this.getUsers();
+          }
+        )
+      }
+    }
+     
+
+  deleteUser(id?:number){
+    console.log("Delete user with id:",id);
+    this.employeeService.deleteUser(id).subscribe(
+      (data)=>{
+        console.log("User deleted successfully",data);
+          this.getUsers(); // Refresh the user list after deletion 
+      }
+    )
+  }
+
+  Oneuser:user|undefined;
+  selectedUser(id?:number){
+      console.log(id);
+      this.employeeService.getUserById(id).subscribe(
+        (data:user)=>{
+          this.Oneuser=data;
+          console.log("Selected User:",data);
+        }
+      )
+  }
 
 }
 
