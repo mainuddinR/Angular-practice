@@ -6,12 +6,13 @@ import { HeaderComponent } from './header/header.component';
 import { FormControl, FormGroup, FormsModule, NgForm, NgModel, ReactiveFormsModule, Validators } from '@angular/forms';
 import { EmployeeService } from './services/employee.service';
 import { user } from './Interface/user';
+import { CurrencyConvertorPipe } from './pipe/currency-convertor.pipe';
 
 @Component({
   selector: 'app-root',
   standalone:true,
   imports: [NgIf,NgFor,NgSwitch, NgSwitchCase,NgSwitchDefault,RouterOutlet ,RouterLink,
-    HeaderComponent , ReactiveFormsModule ,FormsModule ,CommonModule
+    HeaderComponent , ReactiveFormsModule ,FormsModule ,CommonModule, CurrencyConvertorPipe
   ], //ng sob gular bodle CommonModule use korlei hoy
   templateUrl: './app.component.html',
   styleUrl: './app.component.css'
@@ -176,5 +177,6 @@ export class AppComponent {
       )
   }
 
+    amount=10;
 }
 
